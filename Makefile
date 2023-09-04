@@ -1,17 +1,39 @@
-start:
-	docker-compose -f srcs/docker-compose.yml up --detach
+## NGINX
+start-nginx:
+	docker-compose -f srcs/docker-compose.yml up nginx --detach
 
-stop:
-	docker-compose -f srcs/docker-compose.yml down
+stop-nginx:
+	docker-compose -f srcs/docker-compose.yml down nginx
 
-restart: stop start
+restart-nginx: stop-nginx start-nginx
 
-clean:
-	@chmod +x scripts/conditional-stop.sh
-	@./scripts/conditional-stop.sh
-	@chmod +x scripts/conditional-remove.sh
-	@./scripts/conditional-remove.sh
+clean-nginx: # stops and deletes containers
+	@chmod +x scripts/conditional-stop-container.sh
+	@./scripts/conditional-stop-container.sh nginx-inception-ctnr
+	@chmod +x scripts/conditional-delete-container.sh
+	@./scripts/conditional-delete-container.sh nginx-inception-ctnr
 
-# TODO:
-fclean: clean
-	docker rmi nginx-inception
+fclean-nginx: clean-nginx # deletes images
+	@chmod +x scripts/conditional-delete-image.sh
+	@./scripts/conditional-delete-image.sh nginx-inception-img
+
+## MARIADB
+start-mariadb:
+	docker-compose -f srcs/docker-compose.yml up mariadb --detach
+
+stop-mariadb:
+	docker-compose -f srcs/docker-compose.yml down mariadb
+
+restart-mariadb: stop-mariadb start-mariadb
+
+clean-mariadb: # stops and deletes containers
+	@chmod +x scripts/conditional-stop-container.sh
+	@./scripts/conditional-stop-container.sh mariadb-inception-ctnr
+	@chmod +x scripts/conditional-delete-container.sh
+	@./scripts/conditional-delete-container.sh mariadb-inception-ctnr
+
+fclean-mariadb: clean-mariadb # deletes images
+	@chmod +x scripts/conditional-delete-image.sh
+	@./scripts/conditional-delete-image.sh mariadb-inception-img
+
+.PHONY: start-nginx stop-nginx restart-nginx clean-nginx fclean-nginx start-mariadb stop-mariadb restart-mariadb clean-mariadb fclean-mariadb
