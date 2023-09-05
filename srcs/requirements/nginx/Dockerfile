@@ -1,6 +1,6 @@
 FROM debian:oldstable
 
-RUN apt update && apt upgrade
+RUN apt update && apt upgrade -y
 RUN apt install nginx -y
 RUN mkdir -p /data/www
 
