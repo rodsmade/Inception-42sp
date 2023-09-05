@@ -17,6 +17,8 @@ fclean-nginx: clean-nginx # deletes images
 	@chmod +x scripts/conditional-delete-image.sh
 	@./scripts/conditional-delete-image.sh nginx-inception-img
 
+frestart-nginx: fclean-nginx start-nginx
+
 ## MARIADB
 start-mariadb:
 	docker-compose -f srcs/docker-compose.yml up mariadb --detach
@@ -35,5 +37,7 @@ clean-mariadb: # stops and deletes containers
 fclean-mariadb: clean-mariadb # deletes images
 	@chmod +x scripts/conditional-delete-image.sh
 	@./scripts/conditional-delete-image.sh mariadb-inception-img
+
+frestart-mariadb: fclean-mariadb start-mariadb
 
 .PHONY: start-nginx stop-nginx restart-nginx clean-nginx fclean-nginx start-mariadb stop-mariadb restart-mariadb clean-mariadb fclean-mariadb
