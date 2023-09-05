@@ -1,3 +1,18 @@
+## ALL SERVICES AT ONCE
+start:
+	docker-compose -f srcs/docker-compose.yml up --detach
+
+stop:
+	docker-compose -f srcs/docker-compose.yml down
+
+restart: stop start
+
+clean: clean-nginx clean-mariadb
+
+fclean: clean fclean-nginx fclean-mariadb
+
+frestart: fclean start
+
 ## NGINX
 start-nginx:
 	docker-compose -f srcs/docker-compose.yml up nginx --detach
@@ -40,4 +55,6 @@ fclean-mariadb: clean-mariadb # deletes images
 
 frestart-mariadb: fclean-mariadb start-mariadb
 
-.PHONY: start-nginx stop-nginx restart-nginx clean-nginx fclean-nginx start-mariadb stop-mariadb restart-mariadb clean-mariadb fclean-mariadb
+.PHONY: start stop restart clean fclean frestart \
+		start-nginx stop-nginx restart-nginx clean-nginx fclean-nginx frestart-nginx \
+		start-mariadb stop-mariadb restart-mariadb clean-mariadb fclean-mariadb frestart-mariadb \
