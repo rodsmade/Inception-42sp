@@ -1,4 +1,4 @@
-## ALL SERVICES AT ONCE
+## --------------------------------------------- ## ALL SERVICES AT ONCE -------
 start:
 	docker-compose -f srcs/docker-compose.yml up --detach
 
@@ -7,13 +7,13 @@ stop:
 
 restart: stop start
 
-clean: clean-nginx clean-mariadb
+clean: clean-nginx clean-mariadb clean-wordpress
 
-fclean: clean fclean-nginx fclean-mariadb
+fclean: clean fclean-nginx fclean-mariadb fclean-wordpress
 
 frestart: fclean start
 
-## NGINX
+## --------------------------------------------------------- NGINX -------------
 start-nginx:
 	docker-compose -f srcs/docker-compose.yml up nginx --detach
 
@@ -34,7 +34,7 @@ fclean-nginx: clean-nginx # deletes images
 
 frestart-nginx: fclean-nginx start-nginx
 
-## MARIADB
+## ------------------------------------------------------- MARIADB -------------
 start-mariadb:
 	docker-compose -f srcs/docker-compose.yml up mariadb --detach
 
@@ -54,6 +54,27 @@ fclean-mariadb: clean-mariadb # deletes images
 	@./scripts/conditional-delete-image.sh mariadb-inception-img
 
 frestart-mariadb: fclean-mariadb start-mariadb
+
+## -------------------------------------------------------- WORDPRESS ----------
+start-wordpress:
+	docker-compose -f srcs/docker-compose.yml up wordpress --detach
+
+stop-wordpress:
+	docker-compose -f srcs/docker-compose.yml down wordpress
+
+restart-wordpress: stop-wordpress start-wordpress
+
+clean-wordpress: # stops and deletes containers
+	@chmod +x scripts/conditional-stop-container.sh
+	@./scripts/conditional-stop-container.sh wordpress-inception-ctnr
+	@chmod +x scripts/conditional-delete-container.sh
+	@./scripts/conditional-delete-container.sh wordpress-inception-ctnr
+
+fclean-wordpress: clean-wordpress # deletes images
+	@chmod +x scripts/conditional-delete-image.sh
+	@./scripts/conditional-delete-image.sh wordpress-inception-img
+
+frestart-wordpress: fclean-wordpress start-wordpress
 
 .PHONY: start stop restart clean fclean frestart \
 		start-nginx stop-nginx restart-nginx clean-nginx fclean-nginx frestart-nginx \
