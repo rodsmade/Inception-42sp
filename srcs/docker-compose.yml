@@ -1,12 +1,17 @@
 services:
   nginx:
-    build: ./requirements/nginx # configures the path to the Dockerfile from which to build an image
     image: nginx-inception-img # defines the name of the image built from the Dockerfile
     container_name: nginx-inception-ctnr # defines the name of the container
+    build: ./requirements/nginx # configures the path to the Dockerfile from which to build an image
     ports:
       - 80:80 # host machine's 80 port is bound to container's 80 port so that all network traffic on that port is redirected straight to and from the container
-  
+
   mariadb:
-    build: ./requirements/mariadb # configures the path to the Dockerfile from which to build an image
     image: mariadb-inception-img # defines the name of the image built from the Dockerfile
     container_name: mariadb-inception-ctnr # defines the name of the container
+    build: ./requirements/mariadb # configures the path to the Dockerfile from which to build an image
+
+  wordpress:
+    image: wordpress-inception-img # defines the name of the image built from the Dockerfile
+    container_name: wordpress-inception-ctnr # defines the name of the container
+    build: ./requirements/wordpress # configures the path to the Dockerfile from which to build an image
