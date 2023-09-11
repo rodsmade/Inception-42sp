@@ -1,0 +1,7 @@
+server {
+    server_name roaraujo.42.fr;
+
+    location / {
+        root /data/www/roaraujo.42.fr;
+    }
+}
