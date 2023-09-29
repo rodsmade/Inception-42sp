@@ -15,7 +15,8 @@ RUN groupadd -r aurelius --gid 1000 && useradd -r -m -g aurelius --uid 1000 marc
 # Set 'marcus' as the default user
 # USER marcus
 
-EXPOSE 4242
 WORKDIR /pastinha/wordpress
+
+EXPOSE 4242
 
 CMD ["php", "-S", "localhost:4242"]

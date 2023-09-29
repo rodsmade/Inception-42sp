@@ -4,7 +4,7 @@ services:
     container_name: nginx-inception-ctnr # defines the name of the container
     build: ./requirements/nginx # configures the path to the Dockerfile from which to build an image
     ports:
-      - 80:80 # host machine's 80 port is bound to container's 80 port so that all network traffic on that port is redirected straight to and from the container
+      - 443:443 # host machine's 80 port is bound to container's 80 port so that all network traffic on that port is redirected straight to and from the container
 
   mariadb:
     image: mariadb-inception-img
