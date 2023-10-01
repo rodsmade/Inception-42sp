@@ -10,12 +10,17 @@ services:
     image: mariadb-inception-img
     container_name: mariadb-inception-ctnr
     build: ./requirements/mariadb
-    env_file:
-      - .env
+    env_file: .env
+    networks:
+      - wordpress_network
 
   wordpress:
     image: wordpress-inception-img
     container_name: wordpress-inception-ctnr
     build: ./requirements/wordpress
-    ports:
-      - 4242:4242
+    env_file: .env
+    networks:
+      - wordpress_network
+
+networks:
+  wordpress_network:

@@ -1,7 +1,6 @@
 FROM debian:oldstable
 
-RUN apt update && apt upgrade -y
-RUN apt install mariadb-server -y
+RUN apt update && apt upgrade -y && apt install mariadb-server -y
 RUN rm -fr /run/mysqld/mysqld.sock && mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
