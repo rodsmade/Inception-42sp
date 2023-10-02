@@ -5,6 +5,10 @@ services:
     build: ./requirements/nginx # configures the path to the Dockerfile from which to build an image
     ports:
       - 443:443 # host machine's 80 port is bound to container's 80 port so that all network traffic on that port is redirected straight to and from the container
+    networks:
+      - inception-network
+    volumes:
+      - wordpress-vol:/var/www/wordpress
 
   mariadb:
     image: mariadb-inception-img
@@ -12,7 +16,9 @@ services:
     build: ./requirements/mariadb
     env_file: .env
     networks:
-      - wordpress_network
+      - inception-network
+    volumes:
+      - mariadb-vol:/var/lib/mysql
 
   wordpress:
     image: wordpress-inception-img
@@ -20,7 +26,28 @@ services:
     build: ./requirements/wordpress
     env_file: .env
     networks:
-      - wordpress_network
+      - inception-network
+    volumes:
+      - wordpress-vol:/var/www/wordpress
 
 networks:
-  wordpress_network:
+  inception-network:
+    name: inception-network
+    driver: bridge
+
+volumes:
+  wordpress-vol:
+    name: wordpress-vol
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/roaraujo/data/wordpress-volume
+
+  mariadb-vol:
+    name: mariadb-vol
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/roaraujo/data/mariadb-volume

@@ -1,5 +1,9 @@
+# PATHS
+VOLUMES_PATH = /home/roaraujo/data
+
 ## --------------------------------------------- ## ALL SERVICES AT ONCE -------
 start:
+	sudo mkdir -p $(VOLUMES_PATH)/wordpress-volume $(VOLUMES_PATH)/mariadb-volume
 	docker-compose -f srcs/docker-compose.yml up --detach
 
 stop:
@@ -10,6 +14,10 @@ restart: stop start
 clean: clean-nginx clean-mariadb clean-wordpress
 
 fclean: clean fclean-nginx fclean-mariadb fclean-wordpress
+	sudo rm -rf $(VOLUMES_PATH)
+	@chmod +x scripts/conditional-delete-volume.sh
+	@./scripts/conditional-delete-volume.sh wordpress-vol
+	@./scripts/conditional-delete-volume.sh mariadb-vol
 
 frestart: fclean start
 

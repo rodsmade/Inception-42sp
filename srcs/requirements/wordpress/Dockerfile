@@ -14,12 +14,6 @@ RUN mkdir -p /var/run/php && chmod 755 /var/run/php
 # Install wp-cli
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
-# Create a new user named 'marcus' with a specified UID and GID and give it ownership of wp
-RUN groupadd -r aurelius --gid 1000 && useradd -r -m -g aurelius --uid 1000 marcus -p senhazinha && chown marcus:aurelius /usr/local/bin/wp && chown -R marcus:aurelius /var/www/wordpress && chown -R marcus:aurelius /etc/php && chown marcus:aurelius /tmp/wordpress-config.sh && chown -R marcus:aurelius /var/log/
-
-# Set 'marcus' as the default user
-# USER marcus
-
 WORKDIR /var/www/wordpress
 
 EXPOSE 9000
