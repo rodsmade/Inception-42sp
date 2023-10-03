@@ -1,30 +1,34 @@
 services:
   nginx:
-    image: nginx-inception-img # defines the name of the image built from the Dockerfile
-    container_name: nginx-inception-ctnr # defines the name of the container
     build: ./requirements/nginx # configures the path to the Dockerfile from which to build an image
-    ports:
-      - 443:443 # host machine's 80 port is bound to container's 80 port so that all network traffic on that port is redirected straight to and from the container
+    container_name: nginx-inception-ctnr # defines the name of the container
+    depends_on: # defines in which order the services must go up
+      - wordpress
+    image: nginx-inception-img # defines the name of the image built from the Dockerfile
     networks:
       - inception-network
+    ports:
+      - 443:443 # host machine's 443 port is bound to container's 443 port so that all network traffic on that port is redirected straight to and from the container
     volumes:
       - wordpress-vol:/var/www/wordpress
 
   mariadb:
-    image: mariadb-inception-img
-    container_name: mariadb-inception-ctnr
     build: ./requirements/mariadb
+    container_name: mariadb-inception-ctnr
     env_file: .env
+    image: mariadb-inception-img
     networks:
       - inception-network
     volumes:
       - mariadb-vol:/var/lib/mysql
 
   wordpress:
-    image: wordpress-inception-img
-    container_name: wordpress-inception-ctnr
     build: ./requirements/wordpress
+    container_name: wordpress-inception-ctnr
+    depends_on:
+      - mariadb
     env_file: .env
+    image: wordpress-inception-img
     networks:
       - inception-network
     volumes:
@@ -32,22 +36,22 @@ services:
 
 networks:
   inception-network:
-    name: inception-network
     driver: bridge
+    name: inception-network
 
 volumes:
   wordpress-vol:
-    name: wordpress-vol
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
       device: /home/roaraujo/data/wordpress-volume
+      o: 'bind'
+      type: 'none'
+    name: wordpress-vol
 
   mariadb-vol:
-    name: mariadb-vol
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
       device: /home/roaraujo/data/mariadb-volume
+      o: 'bind'
+      type: 'none'
+    name: mariadb-vol

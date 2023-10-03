@@ -4,7 +4,7 @@ VOLUMES_PATH = /home/roaraujo/data
 ## --------------------------------------------- ## ALL SERVICES AT ONCE -------
 start:
 	sudo mkdir -p $(VOLUMES_PATH)/wordpress-volume $(VOLUMES_PATH)/mariadb-volume
-	docker-compose -f srcs/docker-compose.yml up --detach
+	docker-compose -f srcs/docker-compose.yml up --detach --build --force-recreate
 
 stop:
 	docker-compose -f srcs/docker-compose.yml down
@@ -23,7 +23,7 @@ frestart: fclean start
 
 ## --------------------------------------------------------- NGINX -------------
 start-nginx:
-	docker-compose -f srcs/docker-compose.yml up nginx --detach
+	docker-compose -f srcs/docker-compose.yml up nginx --detach --build --force-recreate
 
 stop-nginx:
 	docker-compose -f srcs/docker-compose.yml down nginx
@@ -44,7 +44,7 @@ frestart-nginx: fclean-nginx start-nginx
 
 ## ------------------------------------------------------- MARIADB -------------
 start-mariadb:
-	docker-compose -f srcs/docker-compose.yml up mariadb --detach
+	docker-compose -f srcs/docker-compose.yml up mariadb --detach --build --force-recreate
 
 stop-mariadb:
 	docker-compose -f srcs/docker-compose.yml down mariadb
@@ -65,7 +65,7 @@ frestart-mariadb: fclean-mariadb start-mariadb
 
 ## -------------------------------------------------------- WORDPRESS ----------
 start-wordpress:
-	docker-compose -f srcs/docker-compose.yml up wordpress --detach
+	docker-compose -f srcs/docker-compose.yml up wordpress --detach --build --force-recreate
 
 stop-wordpress:
 	docker-compose -f srcs/docker-compose.yml down wordpress

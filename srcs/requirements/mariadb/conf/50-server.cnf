@@ -5,5 +5,5 @@ datadir = /var/lib/mysql
 
 # Networking configuration
 port = 3306
-socket  = /run/mysqld/mysqld.sock
-bind_address=*
+socket = /run/mysqld/mysqld.sock
+bind_address = 0.0.0.0
