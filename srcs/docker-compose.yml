@@ -13,7 +13,13 @@ services:
       - wordpress-vol:/var/www/wordpress
 
   mariadb:
-    build: ./requirements/mariadb
+    build:
+      context: ./requirements/mariadb
+      args:
+        - SQL_DATABASE
+        - SQL_USER
+        - SQL_PASSWORD
+        - SQL_ROOT_PASSWORD
     container_name: mariadb-inception-ctnr
     env_file: .env
     image: mariadb-inception-img
@@ -43,7 +49,7 @@ volumes:
   wordpress-vol:
     driver: local
     driver_opts:
-      device: /home/roaraujo/data/wordpress-volume
+      device: /tmp/roaraujo/data/wordpress-volume
       o: 'bind'
       type: 'none'
     name: wordpress-vol
@@ -51,7 +57,7 @@ volumes:
   mariadb-vol:
     driver: local
     driver_opts:
-      device: /home/roaraujo/data/mariadb-volume
+      device: /tmp/roaraujo/data/mariadb-volume
       o: 'bind'
       type: 'none'
     name: mariadb-vol

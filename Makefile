@@ -1,9 +1,11 @@
 # PATHS
-VOLUMES_PATH = /home/roaraujo/data
+VOLUMES_PATH = /tmp/roaraujo/data
 
 ## --------------------------------------------- ## ALL SERVICES AT ONCE -------
-start:
+volumes:
 	sudo mkdir -p $(VOLUMES_PATH)/wordpress-volume $(VOLUMES_PATH)/mariadb-volume
+
+start:
 	docker-compose -f srcs/docker-compose.yml up --detach --build --force-recreate
 
 stop:
@@ -22,7 +24,7 @@ fclean: clean fclean-nginx fclean-mariadb fclean-wordpress
 frestart: fclean start
 
 ## --------------------------------------------------------- NGINX -------------
-start-nginx:
+start-nginx: volumes
 	docker-compose -f srcs/docker-compose.yml up nginx --detach --build --force-recreate
 
 stop-nginx:
@@ -43,7 +45,7 @@ fclean-nginx: clean-nginx # deletes images
 frestart-nginx: fclean-nginx start-nginx
 
 ## ------------------------------------------------------- MARIADB -------------
-start-mariadb:
+start-mariadb: volumes
 	docker-compose -f srcs/docker-compose.yml up mariadb --detach --build --force-recreate
 
 stop-mariadb:
@@ -64,7 +66,7 @@ fclean-mariadb: clean-mariadb # deletes images
 frestart-mariadb: fclean-mariadb start-mariadb
 
 ## -------------------------------------------------------- WORDPRESS ----------
-start-wordpress:
+start-wordpress: volumes
 	docker-compose -f srcs/docker-compose.yml up wordpress --detach --build --force-recreate
 
 stop-wordpress:
