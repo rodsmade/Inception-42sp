@@ -1,16 +1,16 @@
 services:
-  nginx:
-    build: ./requirements/nginx # configures the path to the Dockerfile from which to build an image
-    container_name: nginx-inception-ctnr # defines the name of the container
-    depends_on: # defines in which order the services must go up
-      - wordpress
-    image: nginx-inception-img # defines the name of the image built from the Dockerfile
-    networks:
-      - inception-network
-    ports:
-      - 443:443 # host machine's 443 port is bound to container's 443 port so that all network traffic on that port is redirected straight to and from the container
-    volumes:
-      - wordpress-vol:/var/www/wordpress
+  # nginx:
+  #   build: ./requirements/nginx # configures the path to the Dockerfile from which to build an image
+  #   container_name: nginx-inception-ctnr # defines the name of the container
+  #   depends_on: # defines in which order the services must go up
+  #     - wordpress
+  #   image: nginx-inception-img # defines the name of the image built from the Dockerfile
+  #   networks:
+  #     - inception-network
+  #   ports:
+  #     - 443:443 # host machine's 443 port is bound to container's 443 port so that all network traffic on that port is redirected straight to and from the container
+  #   volumes:
+  #     - wordpress-vol:/var/www/wordpress
 
   mariadb:
     build:
