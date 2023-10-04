@@ -1,5 +1,5 @@
 # PATHS
-VOLUMES_PATH = /tmp/roaraujo/data
+VOLUMES_PATH = /home/roaraujo/data
 
 ## --------------------------------------------- ## ALL SERVICES AT ONCE -------
 volumes:

@@ -49,7 +49,7 @@ volumes:
   wordpress-vol:
     driver: local
     driver_opts:
-      device: /tmp/roaraujo/data/wordpress-volume
+      device: /home/roaraujo/data/wordpress-volume
       o: 'bind'
       type: 'none'
     name: wordpress-vol
@@ -57,7 +57,7 @@ volumes:
   mariadb-vol:
     driver: local
     driver_opts:
-      device: /tmp/roaraujo/data/mariadb-volume
+      device: /home/roaraujo/data/mariadb-volume
       o: 'bind'
       type: 'none'
     name: mariadb-vol
