@@ -2,11 +2,14 @@
 VOLUMES_PATH = /home/roaraujo/data
 
 ## --------------------------------------------- ## ALL SERVICES AT ONCE -------
+start: volumes hosts
+	docker-compose -f srcs/docker-compose.yml up --detach --build --force-recreate
+
 volumes:
 	sudo mkdir -p $(VOLUMES_PATH)/wordpress-volume $(VOLUMES_PATH)/mariadb-volume
 
-start:
-	docker-compose -f srcs/docker-compose.yml up --detach --build --force-recreate
+hosts: /etc/hosts
+	@sudo grep "roaraujo.42.fr" /etc/hosts || sudo sh -c 'echo "127.0.0.1 roaraujo.42.fr" >> /etc/hosts'
 
 stop:
 	docker-compose -f srcs/docker-compose.yml down
