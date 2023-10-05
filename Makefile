@@ -10,6 +10,7 @@ volumes:
 
 hosts: /etc/hosts
 	@sudo grep "roaraujo.42.fr" /etc/hosts || sudo sh -c 'echo "127.0.0.1 roaraujo.42.fr" >> /etc/hosts'
+	@sudo grep "www.roaraujo.42.fr" /etc/hosts || sudo sh -c 'echo "127.0.0.1 www.roaraujo.42.fr" >> /etc/hosts'
 
 stop:
 	docker-compose -f srcs/docker-compose.yml down

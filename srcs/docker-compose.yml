@@ -9,6 +9,7 @@ services:
       - inception-network
     ports:
       - 443:443 # host machine's 443 port is bound to container's 443 port so that all network traffic on that port is redirected straight to and from the container
+    restart: always
     volumes:
       - wordpress-vol:/var/www/wordpress
 
@@ -25,6 +26,7 @@ services:
     image: mariadb-inception-img
     networks:
       - inception-network
+    restart: always
     volumes:
       - mariadb-vol:/var/lib/mysql
 
@@ -35,6 +37,7 @@ services:
       - mariadb
     env_file: .env
     image: wordpress-inception-img
+    restart: always
     networks:
       - inception-network
     volumes:
